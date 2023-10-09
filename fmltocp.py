@@ -9,7 +9,9 @@ import sys
 expectedUser = 'ronnieperez' #user that can execute command
 #expectedUser = 'root'        #user that can execute command
 
-fileDict = {}
+fileDict  = {}
+hashDict  = {}
+errorDict = {}
 
 
 #check user login, exit if not expectedUser
@@ -137,13 +139,18 @@ for sourcef in infileList:
 
 
 	#MD5 Calculation
-
 	srcmd5 = calculate_md5(sourcef)
 	dstmd5 = calculate_md5(fulloutfname)
+	hashDict[sourcef] = 'srcmd5'
 
-	print(srcmd5)
-	print(dstmd5)
-	print('')
+	if srcmd5 != dstmd5:
+
+		errorparts = [srcmd5, dstmd5]
+		errorDict[sourcef] = errorparts
+
+
+
+
 
 
 
