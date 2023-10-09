@@ -162,6 +162,16 @@ with open(md5log,'w') as md5file:
 md5file.close()
 
 
+if len(errorDict) == 0:
+
+	print('')
+	print('   ~~~ SUCCESSFUL COPY AND MD5 Generation ~~~')
+	print('')
+else:
+	print('')
+	print('   ~~~ Errors To Investigate ~~~')
+	print(errorDict)
+	print('')
 
 
 	
