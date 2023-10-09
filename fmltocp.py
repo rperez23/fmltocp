@@ -33,11 +33,27 @@ def getInDir():
 	print('')
 	return indir
 
+#get the ltfs mountpoint
+def getLtfsMount():
+
+	while True:
+		print('')
+		outdir = input('   Give me your LTFS mount point: ')
+
+		if os.path.ismount(outdir):
+			break
+		else:
+			print('   ~~~Not a mount~~~')
+	print('')
+	return outdir
+
+
 
 
 
 whoIsThis()
-indir = getInDir()
+indir     = getInDir()
+ltfsmount = getLtfsMount() 
 
 
 
