@@ -18,7 +18,26 @@ def whoIsThis():
 
 		sys.exit(1)
 
+#get input folder from the user
+def getInDir():
 
-whoIsThis() 
+	while True:
+
+		print('')
+		indir = input('   Give me your folder to archive: ')
+
+		if os.path.isdir(indir):
+			break
+		else:
+			print('   ~~~Not a directory~~~')
+	print('')
+	return indir
+
+
+
+
+whoIsThis()
+indir = getInDir()
+
 
 
