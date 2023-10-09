@@ -141,15 +141,25 @@ for sourcef in infileList:
 	#MD5 Calculation
 	srcmd5 = calculate_md5(sourcef)
 	dstmd5 = calculate_md5(fulloutfname)
-	hashDict[sourcef] = 'srcmd5'
+	hashDict[sourcef] = srcmd5
 
 	if srcmd5 != dstmd5:
 
 		errorparts = [srcmd5, dstmd5]
 		errorDict[sourcef] = errorparts
 
+	print(srcmd5,'->',dstmd5)
 
 
+md5log = ltfsmount + '/' + indir + '.md5'
+
+with open(md5log,'w') as md5file:
+	for txt in hashDict.keys():
+		hashval = hashDict[txt]
+		output  = hashval + '  ' + txt
+		md5file.write(output)
+		md5file.write('\n')
+md5file.close()
 
 
 
