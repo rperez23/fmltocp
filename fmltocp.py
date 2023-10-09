@@ -80,7 +80,23 @@ def getoutf(ltfsd,inf):
 	dirparts = inf.split('/')
 	fname    = dirparts.pop()
 	outdir   = ltfsd + '/' + '/'.join(dirparts)
-	#print(inf,',',outdir,',',fname)
+
+	try:
+		os.makedirs(outdir,exist_ok=True)
+	except FileNotFoundError as e:
+		print('   Error Creating',outdir)
+		sys.exit(1)
+	except Exception as e:
+		print('   Error Creating',outdir)
+		sys.exit(1)
+
+
+
+
+	return [outdir, fname]
+
+
+	
 
 
 whoIsThis()
@@ -91,7 +107,11 @@ infileList = sorted(fileDict.keys())
 
 for sourcef in infileList:
 	
-	outf = getoutf(ltfsmount,sourcef)
+	outfList = getoutf(ltfsmount,sourcef)
+	outdir   = outfList[0]
+	outfname = outfList[1]
+
+	
 
 
 
