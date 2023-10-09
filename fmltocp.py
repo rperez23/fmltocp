@@ -1,7 +1,9 @@
 #! /usr/bin/python3
 
+import hashlib
 import os
 import re
+import shutil
 import sys
 
 expectedUser = 'ronnieperez' #user that can execute command
@@ -96,7 +98,19 @@ def getoutf(ltfsd,inf):
 	return [outdir, fname]
 
 
-	
+#calc md5 of file
+# Function to calculate MD5 hash of a file
+def calculate_md5(file_path):
+    md5_hash = hashlib.md5()
+    with open(file_path, "rb") as file:
+        while chunk := file.read(8192):  # Read the file in 8KB chunks
+            md5_hash.update(chunk)
+    return md5_hash.hexdigest()
+
+
+#md5_hash = calculate_md5(file_path)
+
+
 
 
 whoIsThis()
@@ -110,6 +124,28 @@ for sourcef in infileList:
 	outfList = getoutf(ltfsmount,sourcef)
 	outdir   = outfList[0]
 	outfname = outfList[1]
+	fulloutfname = outdir + '/' + outfname
+
+	print(sourcef,'->',fulloutfname)
+
+	try:
+		shutil.copy(sourcef,fulloutfname)
+	except shutil.Error as e:
+		print('Error copying',sourcef)
+	except Exception as e:
+		print('Unexpected error copying',sourcef)
+
+
+	#MD5 Calculation
+
+	srcmd5 = calculate_md5(sourcef)
+	dstmd5 = calculate_md5(fulloutfname)
+
+	print(srcmd5)
+	print(dstmd5)
+	print('')
+
+
 
 	
 
