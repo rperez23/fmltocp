@@ -1,10 +1,13 @@
 #! /usr/bin/python3
 
 import os
+import re
 import sys
 
 expectedUser = 'ronnieperez' #user that can execute command
 #expectedUser = 'root'        #user that can execute command
+
+fileDict = {}
 
 
 #check user login, exit if not expectedUser
@@ -31,6 +34,15 @@ def getInDir():
 		else:
 			print('   ~~~Not a directory~~~')
 	print('')
+
+	pattern = r'/+'
+	replacement = '/'
+
+	indir = re.sub(pattern,replacement,indir)
+
+
+
+
 	return indir
 
 #get the ltfs mountpoint
@@ -45,15 +57,32 @@ def getLtfsMount():
 		else:
 			print('   ~~~Not a mount~~~')
 	print('')
+	pattern = r'/+'
+	replacement = '/'
+
+	outdir = re.sub(pattern,replacement,outdir)
 	return outdir
 
 
+def getAllFiles(folder_path):
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            file_path = os.path.join(root, file)
 
-
+            if os.path.isfile(file_path):
+            	#print(file_path)
+            	fileDict[file_path] = '1'
 
 whoIsThis()
 indir     = getInDir()
 ltfsmount = getLtfsMount() 
+getAllFiles(indir)
+infileList = sorted(fileDict.keys())
+
+for l in infileList:
+	print(l)
+
+
 
 
 
