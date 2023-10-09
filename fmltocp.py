@@ -63,7 +63,7 @@ def getLtfsMount():
 	outdir = re.sub(pattern,replacement,outdir)
 	return outdir
 
-
+#recursively list all files
 def getAllFiles(folder_path):
     for root, dirs, files in os.walk(folder_path):
         for file in files:
@@ -73,14 +73,25 @@ def getAllFiles(folder_path):
             	#print(file_path)
             	fileDict[file_path] = '1'
 
+
+#Make the output destination of the outfile
+def getoutf(ltfsd,inf):
+
+	dirparts = inf.split('/')
+	fname    = dirparts.pop()
+	outdir   = ltfsd + '/' + '/'.join(dirparts)
+	#print(inf,',',outdir,',',fname)
+
+
 whoIsThis()
 indir     = getInDir()
 ltfsmount = getLtfsMount() 
 getAllFiles(indir)
 infileList = sorted(fileDict.keys())
 
-for l in infileList:
-	print(l)
+for sourcef in infileList:
+	
+	outf = getoutf(ltfsmount,sourcef)
 
 
 
