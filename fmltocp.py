@@ -1,13 +1,14 @@
 #! /usr/bin/python3
 
+import getpass
 import hashlib
 import os
 import re
 import shutil
 import sys
 
-expectedUser = 'ronnieperez' #user that can execute command
-#expectedUser = 'root'        #user that can execute command
+#expectedUser = 'ronnieperez' #user that can execute command
+expectedUser  = 'root'        #user that can execute command
 
 fileDict  = {}
 hashDict  = {}
@@ -17,7 +18,7 @@ errorDict = {}
 #check user login, exit if not expectedUser
 def whoIsThis():
 
-	if os.getlogin() != expectedUser:
+	if getpass.getuser() != expectedUser:
 
 		print('')
 		print('   You must be logged in as',expectedUser)
