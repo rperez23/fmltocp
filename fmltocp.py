@@ -122,6 +122,9 @@ ltfsmount = getLtfsMount()
 getAllFiles(indir)
 infileList = sorted(fileDict.keys())
 
+fnum = 0
+ftot = len(infileList)
+
 for sourcef in infileList:
 	
 	outfList = getoutf(ltfsmount,sourcef)
@@ -129,7 +132,12 @@ for sourcef in infileList:
 	outfname = outfList[1]
 	fulloutfname = outdir + '/' + outfname
 
+	fnum += 1
+	percent     = 100 * (fnum / ftot)
+	percentdone = str(round(percent,2)) + '%'
+	print(fnum,'of',ftot,':',percentdone)
 	print(sourcef,'->',fulloutfname)
+	print('')
 
 	try:
 		shutil.copy(sourcef,fulloutfname)
