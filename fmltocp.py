@@ -14,6 +14,8 @@ fileDict  = {}
 hashDict  = {}
 errorDict = {}
 
+tmpdir = '/var/tmp/'
+
 
 #check user login, exit if not expectedUser
 def whoIsThis():
@@ -111,11 +113,6 @@ def calculate_md5(file_path):
     return md5_hash.hexdigest()
 
 
-#md5_hash = calculate_md5(file_path)
-
-
-
-
 whoIsThis()
 indir     = getInDir()
 ltfsmount = getLtfsMount() 
@@ -124,6 +121,15 @@ infileList = sorted(fileDict.keys())
 
 fnum = 0
 ftot = len(infileList)
+tmpmd5 = tmpdir + indir + '.' + str(os.getpid())
+
+#open the tmp file
+try:
+	tmpoutf =  open(tmpmd5,'w')
+except:
+	print('   ~~~Cannot create',tmpmd5)
+	sys.exit(1)
+
 
 for sourcef in infileList:
 	
@@ -137,8 +143,7 @@ for sourcef in infileList:
 	percentdone = str(round(percent,2)) + '%'
 	print(fnum,'of',ftot,':',percentdone)
 	print(sourcef,'->',fulloutfname)
-	print('')
-
+	
 	try:
 		shutil.copy(sourcef,fulloutfname)
 	except shutil.Error as e:
@@ -158,6 +163,11 @@ for sourcef in infileList:
 		errorDict[sourcef] = errorparts
 
 	print(srcmd5,'->',dstmd5)
+	output = srcmd5 + '  ' + sourcef + '\n'
+	tmpoutf.write(output)
+	print('')
+
+tmpoutf.close()
 
 
 md5log = ltfsmount + '/' + indir + '.md5'
