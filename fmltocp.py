@@ -72,7 +72,7 @@ def getLtfsMount():
 
 #recursively list all files
 def getAllFiles(folder_path):
-    for root, dirs, files in os.walk(folder_path):
+    for root, dirs, files in os.walk(folder_path,followlinks=True):
         for file in files:
             file_path = os.path.join(root, file)
 
